@@ -1,5 +1,6 @@
 Cosc480Homework3::Application.routes.draw do
   resources :movies
+  match '/movies/:id/same_director' => 'movies#same_director', :as => 'same_director'
   root :to => redirect('/movies')
 
   # The priority is based upon order of creation:
