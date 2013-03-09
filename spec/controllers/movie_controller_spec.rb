@@ -2,13 +2,30 @@ require "spec_helper"
 
 describe MoviesController do
   describe "add director to existing movie" do
-    it "should call update_attributes and redirect to show" do
-      @movie = mock(Movie, :title => "Black Dynamite", :director => "Shakespeare",
-                                         :release_date => "10-Mar-1990",:id => 1) 
-      Movie.stub!(:find).with("1").and_return(@movie)
+    it "should call update and redirect to movies" do
+      @movie = mock(Movie, :title => "The Social Network", :director => "David Fincher",
+                                         :release_date => "31-Oct-2009",:id => 0) 
+      Movie.stub!(:find).with("0").and_return(@movie)
       @movie.stub!(:update_attributes!).and_return(true)
-      put :update, {:id => "1"}
+      put :update, {:id => "0"}
       response.should redirect_to(movie_path(@movie))
       end
+  end
+
+  describe "sort by title" do
+    it "should sort the movies by title" do
+      get :index, {:sort => "title"}
+      session[:sort].should == "title"
+    end
+  end
+  
+  describe "sort by release date" do
+    it "should sort the movies by release date" do
+      get :index, {:sort => "release_date"}
+      session[:sort].should == "release_date"
+    end
+  end
+  
+  describe "" do
   end
 end
